@@ -1,0 +1,91 @@
+﻿<Window x:Class="Midas2Abaqus.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Midas2Abaqus by 369 Studio v1.2.0-20150408" Height="550" Width="800" MinHeight="550" MinWidth="800">
+    <Grid>
+        <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <TabItem Header="转换程序  ">
+                <Grid Background="#FFE5E5E5">
+                    <Button x:Name="OpenMgtButton" Click="OpenMgtButton_Click" Content="打开mgt文件" HorizontalAlignment="Left" Height="40" Margin="100,0,0,10" VerticalAlignment="Bottom" Width="180"/>
+                    <Button x:Name="StartTransferButton" Click="StartTransferButton_Click" Content="开始转换" HorizontalAlignment="Left" Height="40" Margin="451,0,0,10" VerticalAlignment="Bottom" Width="180" Background="#FF58BF5D"/>
+                    <Border Margin="20,70,20,70" BorderBrush="Gray" BorderThickness="1">
+                        <ScrollViewer Margin="10,0">
+                            <StackPanel>
+                                <TextBlock TextWrapping="Wrap">
+                                <Run Text="***注意事项***"/><LineBreak/>
+                                <Run Text="0.仅支持Midas Gen 800和2014版本！"/><LineBreak/>
+                                <Run Text="1.只能转换杆系结构，如框架、网架、网壳等！"/><LineBreak/>
+                                <Run Text="2.默认梁单元类型为B32！"/><LineBreak/>
+                                <Run Text="3.压力荷载将转换为节点荷载！"/><LineBreak/>
+                                <Run Text="4.释放梁端约束只可释放梁端转动约束。"/><LineBreak/>
+                                <Run Text="5.可选是否将荷载转换为质量。"/><LineBreak/>
+                                <Run Text="6.分配楼面荷载暂时不能转换。"/><LineBreak/>
+                                <Run Text="7.转换完将生成M2A-Static.inp，M2A-Modal.inp，M2A-Buckle.inp三个文件，分别用于计算静力、自振模态、特征值屈曲。"/><LineBreak/>
+                                    <LineBreak/>
+                                <Run Text="***准备工作***"/><LineBreak/>
+                                <Run Text="1.将Midas的单位系统调为N，m。"/><LineBreak/>
+                                <Run Text="2.在Midas中将全部截面类型由'数据库'调为'用户'。"/><LineBreak/>
+                                <Run Text="3.转换需要时间，请耐心等待，转换完成会有提示！"/><LineBreak/>
+                                </TextBlock>
+                                <TextBlock x:Name="VersionTextBlock" TextWrapping="Wrap"/>
+                                <TextBlock x:Name="UnitTextBlock" TextWrapping="Wrap"/>
+                                <TextBlock x:Name="LoadCaseBlock" TextWrapping="Wrap"/>
+                                <TextBlock x:Name="DisplayTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+                                <TextBlock Text="***选择要转换的荷载工况及组合值系数(暂不可用，需要在Midas里删除多余工况)："/>
+                                <CheckBox x:Name="SelfWeightCheckBox" Content="是否考虑自重"/>
+                                <ListBox>
+                                    <StackPanel Orientation="Horizontal">
+                                        <CheckBox x:Name="DeadLoadCheckBox" Content="恒载    "/>
+                                        <TextBlock Text="  组合值系数："/>
+                                        <TextBox x:Name="DeadLoadIndex" Text="1.0" Width="50"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <CheckBox x:Name="LiveLoadCheckBox" Content="活载    "/>
+                                        <TextBlock Text="  组合值系数："/>
+                                        <TextBox x:Name="LiveLoadIndex" Text="1.0" Width="50"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <CheckBox x:Name="WindLoadCheckBox" Content="风载    "/>
+                                        <TextBlock Text="  组合值系数："/>
+                                        <TextBox x:Name="WindLoadIndex" Text="1.0" Width="50"/>
+                                    </StackPanel>
+                                </ListBox>
+                                <!--<TextBlock Text="***网格划分***"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="单根杆件划分数量："/>
+                                    <TextBox HorizontalAlignment="Left" x:Name="MeshNumberTextBox" Text="10" Width="50"/>
+                                </StackPanel>-->
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Border>
+                    <TextBlock HorizontalAlignment="Left" Height="21" Margin="26,5,0,0" TextWrapping="Wrap" Text="源文件：" VerticalAlignment="Top" Width="77" Background="#FFBBBBBB"/>
+                    <TextBlock x:Name="SourceFileTextBlock" HorizontalAlignment="Left" Height="21" Margin="142,5,0,0" Text="" VerticalAlignment="Top"/>
+                    <TextBlock HorizontalAlignment="Left" Height="21" Margin="26,38,0,0" TextWrapping="Wrap" Text="输出文件：" VerticalAlignment="Top" Width="77" Background="#FFAEAEAE"/>
+                    <TextBlock x:Name="OutputFileTextBlock" HorizontalAlignment="Left" Height="21" Margin="142,38,0,0" Text="" VerticalAlignment="Top"/>
+                    <!--<Button x:Name="TestButton" Click="TestButton_Click" Content="测试按钮" HorizontalAlignment="Left" Height="40" Margin="318,0,0,10" Width="110" VerticalAlignment="Bottom" Background="#FF58BF5D"/>-->
+                </Grid>
+            </TabItem>
+            <TabItem Header="小工具  ">
+                <Grid Background="#FFE5E5E5">
+                    <TextBlock Text="点1坐标：" Margin="20,33"/>
+                    <TextBlock Text="点2坐标：" Margin="20,83"/>
+                    <TextBlock Text="点3坐标：" Margin="20,133"/>
+                    <TextBox x:Name="TextBoxX1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0.0" VerticalAlignment="Top" Width="120" Margin="78,30,0,0"/>
+                    <TextBox x:Name="TextBoxY1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0.0" VerticalAlignment="Top" Width="120" Margin="262,30,0,0"/>
+                    <TextBox x:Name="TextBoxZ1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0.0" VerticalAlignment="Top" Width="120" Margin="446,30,0,0"/>
+                    <TextBox x:Name="TextBoxX2" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0.0" VerticalAlignment="Top" Width="120" Margin="78,80,0,0"/>
+                    <TextBox x:Name="TextBoxY2" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0.0" VerticalAlignment="Top" Width="120" Margin="262,80,0,0"/>
+                    <TextBox x:Name="TextBoxZ2" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0.0" VerticalAlignment="Top" Width="120" Margin="446,80,0,0"/>
+                    <TextBox x:Name="TextBoxX3" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0.0" VerticalAlignment="Top" Width="120" Margin="78,130,0,0"/>
+                    <TextBox x:Name="TextBoxY3" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0.0" VerticalAlignment="Top" Width="120" Margin="262,130,0,0"/>
+                    <TextBox x:Name="TextBoxZ3" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0.0" VerticalAlignment="Top" Width="120" Margin="446,130,0,0"/>
+                    <Button Content="计算投影面积" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="120" Margin="78,218,0,0" x:Name="CalculateAreaButton" Click="CalculateAreaButton_Click" Background="#FF58BF5D"/>
+                    <!--<Button Content="统计总投影面积" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="120" Margin="78,268,0,0" x:Name="CalculateTotalAreaButton" Click="CalculateTotalAreaButton_Click" Background="#FF58BF5D"/>-->
+
+
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>
